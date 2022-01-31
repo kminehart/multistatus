@@ -45,7 +45,7 @@ import (
 	"time"
 
 	spin "github.com/tj/go-spin"
-	"golang.org/x/crypto/ssh/terminal"
+	"golang.org/x/term"
 )
 
 // WorkerState represent the current state of a Worker
@@ -119,7 +119,7 @@ func (w *WorkerSet) Print(ctx context.Context) {
 		done <- true
 	}()
 
-	if terminal.IsTerminal(int(os.Stdout.Fd())) {
+	if term.IsTerminal(int(os.Stdout.Fd())) {
 		end := false
 		for !end {
 			select {
@@ -143,7 +143,7 @@ func (w *WorkerSet) print(end bool) {
 	completed := "✔"
 	inProgress := "-"
 
-	isTerm := terminal.IsTerminal(int(os.Stdout.Fd()))
+	isTerm := term.IsTerminal(int(os.Stdout.Fd()))
 
 	if isTerm {
 		// wipe section
