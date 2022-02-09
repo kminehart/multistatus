@@ -174,14 +174,19 @@ func (w *WorkerSet) print(end bool) {
 		}
 		fmt.Printf("  %s %s\n", p, v.Name)
 	}
-	if isTerm {
-		// Hide the cursor
-		fmt.Print("\033[?25l")
-		if end {
-			// Show the cursor
-			fmt.Print("\033[?25h")
-		} else {
-			fmt.Printf("%s", strings.Repeat("\033[A", len(w.Workers)))
-		}
+
+	if !isTerm {
+		return
 	}
+
+	// Hide the cursor
+	fmt.Print("\033[?25l")
+
+	if end {
+		// Show the cursor
+		fmt.Print("\033[?25h")
+		return
+	}
+
+	fmt.Printf("%s", strings.Repeat("\033[A", len(w.Workers)))
 }
